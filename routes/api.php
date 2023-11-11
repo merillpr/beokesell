@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\PriceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +20,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Product
+Route::get('product', [ProductController::class, 'index']);
+Route::post('product', [ProductController::class, 'store']);
+Route::get('product/{id}', [ProductController::class, 'show']);
+Route::put('product/{id}', [ProductController::class, 'update']);
+Route::delete('product/{id}', [ProductController::class, 'destroy']);
+//End Product
+
+//Price
+Route::get('price', [PriceController::class, 'index']);
+Route::post('price', [PriceController::class, 'store']);
+Route::get('price/{id}', [PriceController::class, 'show']);
+Route::put('price/{id}', [PriceController::class, 'update']);
+Route::delete('price/{id}', [PriceController::class, 'destroy']);
+//End Price
