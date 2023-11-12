@@ -69,7 +69,10 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -129,6 +132,133 @@
 				}
 			],
 			"id": "c274c222-4fb9-4ceb-8468-0ec1e528814e"
+		},
+		{
+			"name": "Price",
+			"item": [
+				{
+					"name": "Price - List All",
+					"id": "d6f29a6a-d232-40a4-83f7-e909c21d5e68",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Price - Create",
+					"id": "8d4405cc-176f-45ba-9c48-5e5b0f83c409",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Price - Get By Id",
+					"id": "0e82d733-915c-42b1-a675-0629ad24eeb5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Price - Update",
+					"id": "dfeace01-dd1f-4574-9d56-d06f63a0f3b1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/product/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"product",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Price - Delete",
+					"id": "e01af040-e795-4c81-b887-92116774d1a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/price/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"price",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "58c2318f-915a-46d6-8e3b-567aa8c86f23"
 		}
 	]
 }
