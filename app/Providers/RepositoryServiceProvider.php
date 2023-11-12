@@ -17,5 +17,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\PriceInterface',
             'App\Repositories\PriceRepository'
         );
+
+        $this->app->bind(
+            'App\Interfaces\TransactionInterface',
+            'App\Repositories\TransactionRepository'
+        );
     }
 }

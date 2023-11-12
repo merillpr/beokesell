@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PriceController;
+use App\Http\Controllers\API\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,11 @@ Route::get('price/{id}', [PriceController::class, 'show']);
 Route::put('price/{id}', [PriceController::class, 'update']);
 Route::delete('price/{id}', [PriceController::class, 'destroy']);
 //End Price
+
+//Transaction
+Route::get('transaction', [TransactionController::class, 'index']);
+Route::post('transaction', [TransactionController::class, 'store']);
+Route::get('transaction/{id}', [TransactionController::class, 'show']);
+Route::put('transaction/{id}', [TransactionController::class, 'update']);
+Route::delete('transaction/{id}', [TransactionController::class, 'destroy']);
+//End Transaction
