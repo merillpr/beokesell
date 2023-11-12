@@ -14,7 +14,7 @@ class TransactionRepository implements TransactionInterface
     use ResponseAPI;
 
     public function getAllTransactions()
-    {
+    {   
         try {
             $transaction = Transaction::all();
             return $this->success(
