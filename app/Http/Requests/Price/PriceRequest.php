@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Price;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PriceRequest extends FormRequest
 {
