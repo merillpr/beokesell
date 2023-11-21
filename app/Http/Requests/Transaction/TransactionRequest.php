@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Transaction;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TransactionRequest extends FormRequest
 {
@@ -22,10 +25,23 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|int',
-            'price_id' => 'required|int',
-            'qty' => 'required|int',
-            'is_purchase' => 'required|boolean',
+            'product_id' => ['required', 'integer', Rule::exists('products', 'id')],
+            'price_id' => ['required', 'integer', Rule::exists('prices', 'id')],
+            'qty' => ['required', 'integer', 'gt:0'],
+            'is_purchase' => 'required', 'boolean',
         ];
+    }
+
+    /**
+    * Get the error messages for the defined validation rules.*
+    * @return array
+    */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Validation failed',
+            'success' => false,
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
