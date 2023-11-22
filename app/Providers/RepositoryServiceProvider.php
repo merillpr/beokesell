@@ -22,5 +22,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\TransactionInterface',
             'App\Repositories\TransactionRepository'
         );
+
+        $this->app->bind(
+            'App\Interfaces\UserInterface',
+            'App\Repositories\UserRepository'
+        );
     }
 }

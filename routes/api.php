@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PriceController;
 use App\Http\Controllers\API\TransactionController;
@@ -18,30 +19,50 @@ use App\Http\Controllers\API\TransactionController;
 |
 */
 
+//auth
+Route::controller(UserController::class)->group(function(){
+    Route::post('register', 'registerUser');
+    Route::post('login', 'loginUser');
+});
+//auth
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Product
-Route::get('product', [ProductController::class, 'index']);
-Route::post('product', [ProductController::class, 'store']);
-Route::get('product/{id}', [ProductController::class, 'show']);
-Route::put('product/{id}', [ProductController::class, 'update']);
-Route::delete('product/{id}', [ProductController::class, 'destroy']);
-//End Product
+Route::middleware('auth:sanctum')->group( function () {
+    //Auth
+    Route::post('/logout', [UserController::class, 'logoutUser']);
+    //End Auth
 
-//Price
-Route::get('price', [PriceController::class, 'index']);
-Route::post('price', [PriceController::class, 'store']);
-Route::get('price/{id}', [PriceController::class, 'show']);
-Route::put('price/{id}', [PriceController::class, 'update']);
-Route::delete('price/{id}', [PriceController::class, 'destroy']);
-//End Price
+    //Product
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('product', 'index');
+        Route::post('product', 'store');
+        Route::get('product/{id}', 'show');
+        Route::put('product/{id}', 'update');
+        Route::delete('product/{id}', 'destroy');
+    });
+    //End Product
 
-//Transaction
-Route::get('transaction', [TransactionController::class, 'index']);
-Route::post('transaction', [TransactionController::class, 'store']);
-Route::get('transaction/{id}', [TransactionController::class, 'show']);
-Route::put('transaction/{id}', [TransactionController::class, 'update']);
-Route::delete('transaction/{id}', [TransactionController::class, 'destroy']);
-//End Transaction
+    //Price
+    Route::controller(PriceController::class)->group(function(){
+        Route::get('price', 'index');
+        Route::post('price', 'store');
+        Route::get('price/{id}', 'show');
+        Route::put('price/{id}', 'update');
+        Route::delete('price/{id}', 'destroy');
+    });
+    
+    //End Price
+
+    //Transaction
+    Route::controller(TransactionController::class)->group(function(){
+        Route::get('transaction', 'index');
+        Route::post('transaction', 'store');
+        Route::get('transaction/{id}', 'show');
+        Route::put('transaction/{id}', 'update');
+        Route::delete('transaction/{id}', 'destroy');
+    });
+    //End Transaction
+});
