@@ -3,10 +3,14 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+use App\Traits\ResponseAPI;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ResponseAPI;
+
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -26,5 +30,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Handle when user not authenticated
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $this->error(message: 'Not Authenticated', statusCode: 401);
     }
 }
