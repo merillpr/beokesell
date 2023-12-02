@@ -433,7 +433,10 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -445,7 +448,62 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User - Email Verify",
+					"id": "4f63024d-bc1d-42c7-8f87-37cd073c9e3e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User - Resend Verify",
+					"id": "003a9827-793d-495e-8ff9-3d85a1b730bb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/okesell/beokesell/public/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"okesell",
+								"beokesell",
+								"public",
+								"api",
+								"product"
+							]
+						}
 					},
 					"response": []
 				}
