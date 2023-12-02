@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\LoginRequest;
+use App\Http\Requests\User\EmailVerificationRequest;
 use App\Interfaces\UserInterface;
 use DB;
 
@@ -54,5 +55,26 @@ class UserController extends Controller
     public function logoutUser()
     {
         return $this->userInterface->logoutUser();
+    }
+
+    /**
+     * Email Verification
+     * 
+     * @param   EmailVerificationRequest $request
+     * @return Response
+     */
+    public function emailVerification(EmailVerificationRequest $request)
+    {
+        return $this->userInterface->emailVerification($request);
+    }
+
+    /**
+     * Resend Verification
+     * 
+     * @return Response
+     */
+    public function resendVerification()
+    {
+        return $this->userInterface->resendVerification();
     }
 }
