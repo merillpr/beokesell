@@ -32,7 +32,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group( function () {
     //Auth
-    Route::post('/logout', [UserController::class, 'logoutUser']);
+    Route::controller(UserController::class)->group(function(){
+        Route::post('logout', 'logoutUser');
+        Route::post('email-verification', 'emailVerification');
+        Route::post('resend-verification', 'resendVerification'); 
+    });
     //End Auth
 
     //Product

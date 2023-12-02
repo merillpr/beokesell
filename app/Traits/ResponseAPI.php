@@ -39,7 +39,7 @@ trait ResponseAPI
      * @param   integer         $statusCode
      * @param   array|object    $data
      */
-    public function success($message, $data, $statusCode = 200, )
+    public function success($message, $data = [], $statusCode = 200, )
     {
         return $this->coreResponse(message: $message, statusCode: $statusCode, data: $data);
     }
