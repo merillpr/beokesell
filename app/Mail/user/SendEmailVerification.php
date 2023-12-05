@@ -15,13 +15,15 @@ class SendEmailVerification extends Mailable
     use Queueable, SerializesModels;
 
     public $code;
+    public $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($code)
+    public function __construct($code, $user)
     {
         $this->code = $code;
+        $this->user = $user;
     }
 
     /**
@@ -43,6 +45,7 @@ class SendEmailVerification extends Mailable
             view: 'user.email-verification',
             with: [
                 'code' => $this->code,
+                'user' => $this->user
             ],
         );
     }

@@ -112,9 +112,8 @@ class UserRepository implements UserInterface
     {
         DB::beginTransaction();
         try {
-            $email = $user->email;
             $code = random_int(100000, 999999);
-            dispatch(new SendEmailVerificationJob($email, $code));
+            dispatch(new SendEmailVerificationJob($user, $code));
 
             $user->otp = $code;
             $user->request_otp_at = now()->format('Y-m-d H:i:s');
