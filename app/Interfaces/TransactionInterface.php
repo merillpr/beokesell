@@ -45,4 +45,32 @@ interface TransactionInterface
      * @access  public
      */
     public function deleteTransaction($id);
+
+    /**
+     * Get all Transaction Recaps
+     * 
+     * @method  GET api/transaction-recap
+     * @access  public
+     */
+    public function getAllTransactionRecaps();
+
+    /**
+     * Get Transaction Recap By ID
+     * 
+     * @param   integer     $id
+     * 
+     * @method  GET api/transaction-recap/{id}
+     * @access  public
+     */
+    public function getTransactionRecapById($id);
+
+    /**
+     * Get Transaction Recap List By ID
+     * 
+     * @param   integer     $id
+     * 
+     * @method  GET api/transaction-recap-list/{id}
+     * @access  public
+     */
+    public function getTransactionRecapListById($id);
 }

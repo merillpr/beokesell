@@ -86,4 +86,67 @@ class TransactionRepository implements TransactionInterface
             return $this->error($e->getMessage(), $e->getCode());
         }
     }
+
+    public function getAllTransactionRecaps()
+    {   
+        try {
+            $transaction = Transaction::join('products', 'transactions.product_id', '=', 'products.id')
+                ->join('prices', 'transactions.price_id', '=', 'prices.id')
+                ->select('products.id', 'products.name', 'prices.purchase_price', 'prices.selling_price')
+                ->selectRaw('SUM (CASE WHEN transactions.is_purchase is true THEN transactions.qty ELSE 0 END) - SUM (CASE WHEN transactions.is_purchase is false THEN transactions.qty ELSE 0 END) as stock')
+                ->groupBy('products.id', 'products.name', 'prices.purchase_price', 'prices.selling_price', 'prices.id')
+                ->orderBy('products.name', 'asc')
+                ->get();
+
+            return $this->success(
+                message: "All Transaction Recaps", 
+                data: $transaction
+            );
+        } catch(\Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function getTransactionRecapById($id)
+    {
+        try {
+            $transaction = Transaction::join('products', 'transactions.product_id', '=', 'products.id')
+                ->join('prices', 'transactions.price_id', '=', 'prices.id')
+                ->select('products.id AS product_id', 'prices.id as price_id', 'products.name', 'prices.purchase_price', 'prices.selling_price')
+                ->selectRaw('SUM (CASE WHEN transactions.is_purchase is true THEN transactions.qty ELSE 0 END) - SUM (CASE WHEN transactions.is_purchase is false THEN transactions.qty ELSE 0 END) as stock')
+                ->where('products.id',$id)
+                ->groupBy('products.id', 'products.name', 'prices.purchase_price', 'prices.selling_price', 'prices.id')
+                ->orderBy('products.name', 'asc')
+                ->get();
+            
+            if(!$transaction) return $this->error(
+                message: "No Transaction Recap with product ID $id", 
+                statusCode: 404
+            );
+
+            return $this->success("Transaction Recap", $transaction);
+        } catch(\Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function getTransactionRecapListById($id)
+    {
+        try {
+            $transaction = Transaction::select('*')
+                ->where('transactions.product_id', $id)
+                ->selectRaw('CASE WHEN transactions.is_purchase IS TRUE THEN \'In\' ELSE \'Out\' END AS status')
+                ->orderBy('transactions.created_at', 'asc')
+                ->get();
+            
+            if(!$transaction) return $this->error(
+                message: "No Transaction Recap List with product ID $id", 
+                statusCode: 404
+            );
+
+            return $this->success("Transaction Recap List", $transaction);
+        } catch(\Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
 }

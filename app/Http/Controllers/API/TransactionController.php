@@ -76,4 +76,36 @@ class TransactionController extends Controller
     {
         return $this->transactionInterface->deleteTransaction($id);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function recaps()
+    {
+        return $this->transactionInterface->getAllTransactionRecaps();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function recap(int $id)
+    {
+        return $this->transactionInterface->getTransactionRecapById($id);
+    }
+
+    /**
+     * Display a listing data from specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function recapList(int $id)
+    {
+        return $this->transactionInterface->getTransactionRecapListById($id);
+    }
 }

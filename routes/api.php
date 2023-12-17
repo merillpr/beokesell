@@ -67,6 +67,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('transaction/{id}', 'show');
         Route::put('transaction/{id}', 'update');
         Route::delete('transaction/{id}', 'destroy');
+        Route::get('transaction-recaps', 'recaps');
+        Route::get('transaction-recap/{id}', 'recap');
+        Route::get('transaction-recap-list/{id}', 'recapList');
     });
     //End Transaction
 });
