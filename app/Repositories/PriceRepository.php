@@ -16,7 +16,7 @@ class PriceRepository implements PriceInterface
     public function getAllPrices()
     {
         try {
-            $price = Price::select('*','products.name as product_name')
+            $price = Price::select('*','products.name as product_name', 'prices.id as id')
             ->join('products','products.id','=','prices.product_id')->get();
             return $this->success(
                 message: "All Prices", 
