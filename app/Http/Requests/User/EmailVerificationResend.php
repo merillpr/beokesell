@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EmailVerificationRequest extends FormRequest
+class EmailVerificationResend extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class EmailVerificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer', Rule::exists('users', 'id')],
-            'code' => 'required|integer',
+            'email' => 'required|email',
         ];
     }
 

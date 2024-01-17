@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\EmailVerificationRequest;
+use App\Http\Requests\User\EmailVerificationResend;
 use App\Interfaces\UserInterface;
 use DB;
 
@@ -71,10 +72,11 @@ class UserController extends Controller
     /**
      * Resend Verification
      * 
+     * @param   EmailVerificationResend $request
      * @return Response
      */
-    public function resendVerification()
+    public function resendVerification(EmailVerificationResend $request)
     {
-        return $this->userInterface->resendVerification();
+        return $this->userInterface->resendVerification($request);
     }
 }

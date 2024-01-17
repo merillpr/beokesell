@@ -7,6 +7,7 @@ use App\Interfaces\PriceInterface;
 use App\Traits\ResponseAPI;
 use App\Models\Price;
 use DB;
+use Illuminate\Database\QueryException;
 
 class PriceRepository implements PriceInterface
 {
@@ -77,7 +78,12 @@ class PriceRepository implements PriceInterface
 
             if(!$price) return $this->error(message: "No price with ID $id", statusCode: 404);
 
-            $price->delete();
+            try {
+                $price->delete();
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return $this->error("Cannot delete price. The price is used", statusCode: 400);
+            }
 
             DB::commit();
             return $this->success("Price deleted", $price);

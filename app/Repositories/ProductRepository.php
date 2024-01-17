@@ -7,6 +7,7 @@ use App\Interfaces\ProductInterface;
 use App\Traits\ResponseAPI;
 use App\Models\Product;
 use DB;
+use Illuminate\Database\QueryException;
 
 class ProductRepository implements ProductInterface
 {
@@ -74,7 +75,12 @@ class ProductRepository implements ProductInterface
 
             if(!$product) return $this->error(message: "No product with ID $id", statusCode: 404);
 
-            $product->delete();
+            try {
+                $product->delete();
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return $this->error("Cannot delete product. The product is used", statusCode: 400);
+            }
 
             DB::commit();
             return $this->success("Product deleted", $product);

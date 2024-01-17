@@ -5,6 +5,7 @@ namespace App\Interfaces;
 use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\EmailVerificationRequest;
+use App\Http\Requests\User\EmailVerificationResend;
 
 interface UserInterface
 {
@@ -48,8 +49,11 @@ interface UserInterface
 
     /**
      * Resend Verification 
+     * 
+     * @param   EmailVerificationResend $request
+     * 
      * @method POST api/resend-verification
      * @access public
      */
-    public function resendVerification();
+    public function resendVerification(EmailVerificationResend $request);
 }
