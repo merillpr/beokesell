@@ -23,7 +23,10 @@ use App\Http\Controllers\API\TransactionController;
 Route::controller(UserController::class)->group(function(){
     Route::post('register', 'registerUser');
     Route::post('login', 'loginUser');
+    Route::post('email-verification', 'emailVerification');
+    Route::post('resend-verification', 'resendVerification'); 
 });
+
 //auth
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -34,8 +37,6 @@ Route::middleware('auth:sanctum')->group( function () {
     //Auth
     Route::controller(UserController::class)->group(function(){
         Route::post('logout', 'logoutUser');
-        Route::post('email-verification', 'emailVerification');
-        Route::post('resend-verification', 'resendVerification'); 
     });
     //End Auth
 

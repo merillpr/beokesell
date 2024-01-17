@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\EmailVerificationRequest;
+use App\Http\Requests\User\EmailVerificationResend;
 use App\Interfaces\UserInterface;
 use App\Traits\ResponseAPI;
 use App\Models\User;
@@ -28,6 +29,7 @@ class UserRepository implements UserInterface
             $user = User::create($input);
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
             $success['name'] =  $user->name;
+            $success['id'] = $user->id;
 
             $this->sendOTP($user);
             DB::commit();
@@ -43,6 +45,9 @@ class UserRepository implements UserInterface
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             Auth::user()->tokens()->delete();
             $user = Auth::user();
+            if(!$user->is_verified){
+                return $this->error(message: 'Email has not verified, verify your email first!', statusCode: 400);
+            }
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
             $success['name'] =  $user->name;['name'];
    
@@ -63,10 +68,10 @@ class UserRepository implements UserInterface
     {
         DB::beginTransaction();
         try {
-            $user = auth()->user();
+            $user = User::where('id','=',$request->id)->first();
 
             if($user->email_verified_at) {
-                return $this->error(message: "Email has been pre-verified!", statusCode: 400);
+                return $this->error(message: "Email has been verified!", statusCode: 400);
             }
 
             $time = now()->format('Y-m-d H:i:s');
@@ -97,12 +102,18 @@ class UserRepository implements UserInterface
         }
     }
 
-    public function resendVerification() {
+    public function resendVerification(EmailVerificationResend $request) {
         try{
-            $user = Auth::user();
-            $this->sendOTP(user: $user);
+            $user = User::where('email','=',$request->email)->first();
 
-            return $this->success(message: "Code sent via email, check your email!", statusCode: 201);
+            if(!$user){
+                return $this->error(message: "Email is not registered!", statusCode: 400);
+            }else if($user->is_verified){
+                return $this->error(message: "Email is verified!", statusCode: 400);
+            }
+
+            $this->sendOTP(user: $user);
+            return $this->success(data:$user, message: "Code sent via email, check your email!", statusCode: 201);
         } catch(\Exception $e) {
             return $this->error($e->getMessage(), $e->getCode);
         }
